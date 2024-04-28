@@ -58,7 +58,7 @@ class Router {
             if (isset($matches)) {
                 $controllerInstance->$method($matches["id"]);
             } else {
-                if($requestMethod == 'post') $controllerInstance->$method($request);
+                if($requestMethod == 'post' || $requestMethod == 'put') $controllerInstance->$method($request);
                 else $controllerInstance->$method();
             }
             exit();
