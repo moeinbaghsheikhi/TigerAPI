@@ -105,11 +105,21 @@ class QueryBuilder {
             if (!empty($this->where)) {
                 $sql .= ' WHERE ' . implode(' AND ', $this->where);
             }
+
+            $statement = $this->pdo->prepare($sql);
+            $success = $statement->execute();
+            if($success) return true;
+            else return false;
         } elseif ($this->deleteFlag) {
             $sql = "DELETE FROM $this->table";
             if (!empty($this->where)) {
                 $sql .= ' WHERE ' . implode(' AND ', $this->where);
             }
+
+            $statement = $this->pdo->prepare($sql);
+            $success = $statement->execute();
+            if($success) return true;
+            else return false;
         } else {
             $sql = "SELECT $this->select FROM $this->table";
 

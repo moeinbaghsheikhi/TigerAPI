@@ -18,7 +18,7 @@ class BooksController {
     public function index() {
         $books =
             $this->queryBuilder
-            ->table('book')->get()
+            ->table('book')->getAll()
             ->execute();
 
         // For demonstration purposes, I'll just return the SQL string
@@ -51,18 +51,28 @@ class BooksController {
     }
 
     // Update an existing book
-    public function update($id) {
-        // Your logic to update an existing book by ID
-        // Receive data from request body ($_POST or php://input)
-        // Update the book entry with the given ID
-        // Return the updated book
+    public function update($id, $request) {
+        $deleteBook = $this->queryBuilder
+            ->table("book")
+            ->update([
+                "title" => $request->title,
+                "description"=> $request->description,
+                "price"  => $request->price
+            ])
+            ->where("id", "=", $id)
+            ->execute();
+
+        return $this->sendResponse(message: "success");
     }
 
     // Delete a book
     public function destroy($id) {
-        // Your logic to delete a book by ID
-        // Find the book entry with the given ID
-        // Delete the book entry
-        // Return a success message
+        $deleteBook = $this->queryBuilder
+            ->table("book")
+            ->delete()
+            ->where("id", "=", $id)
+            ->execute();
+
+        return $this->sendResponse(message: "success");
     }
 }

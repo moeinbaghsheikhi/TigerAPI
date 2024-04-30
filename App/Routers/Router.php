@@ -55,10 +55,11 @@ class Router {
             $request = $matchedRoute['request'];
 
             $controllerInstance = new $controller();
-            if (isset($matches)) {
+            if (isset($matches) && $requestMethod != "put") {
                 $controllerInstance->$method($matches["id"]);
             } else {
-                if($requestMethod == 'post' || $requestMethod == 'put') $controllerInstance->$method($request);
+                if($requestMethod == 'post') $controllerInstance->$method($request);
+                else if($requestMethod == 'put' && isset($matches)) $controllerInstance->$method($matches["id"], $request);
                 else $controllerInstance->$method();
             }
             exit();
