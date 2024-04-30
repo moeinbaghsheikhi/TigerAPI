@@ -4,6 +4,7 @@ namespace App\Database;
 
 use Dotenv\Dotenv;
 use PDO;
+use PDOException;
 
 class Connection {
     protected $pdo;

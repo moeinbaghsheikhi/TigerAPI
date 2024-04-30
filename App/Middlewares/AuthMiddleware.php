@@ -22,7 +22,7 @@ class AuthMiddleware {
 
         // Verify the JWT token
         if (!$this->verifyToken($token)) {
-            return $this->sendResponse(null, "Unauthorized!", 401);
+            return $this->sendResponse(null, "Unauthorized Token!", 401);
         }
 
         return true;
@@ -30,7 +30,7 @@ class AuthMiddleware {
 
     private function isPublicPath($path) {
         // Define public paths
-        $publicPaths = ['v1/login' ,'v1/verify']; // Add more public paths if needed
+        $publicPaths = ['v1/login' ,'v1/verify', 'v1/books']; // Add more public paths if needed
 
         // Check if the requested path is public
         return in_array($path, $publicPaths);

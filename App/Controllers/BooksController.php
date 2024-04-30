@@ -3,13 +3,25 @@
 namespace App\Controllers;
 
 use App\Traits\ResponseTrait;
+use App\Database\QueryBuilder;
 
 class BooksController {
     use ResponseTrait;
+    protected $queryBuilder;
+
+    public function __construct() {
+        $this->queryBuilder = new QueryBuilder();
+    }
+
+
     // Retrieve all books
     public function index() {
-        // Your logic to retrieve all books
-        $books = [["name" => "پدر پولدار", "price" => 50000]]; // Mock data
+        $books =
+            $this->queryBuilder
+            ->table('book')->get()
+            ->execute();
+
+        // For demonstration purposes, I'll just return the SQL string
         return $this->sendResponse($books, "success", 200);
     }
 
@@ -25,11 +37,17 @@ class BooksController {
     }
 
     // Store a new book
-    public function store() {
-        // Your logic to store a new book
-        // Receive data from request body ($_POST or php://input)
-        // Create a new book entry
-        // Return the newly created book
+    public function store($request) {
+        $newBook = $this->queryBuilder
+            ->table("book")
+            ->insert([
+                "title" => $request->title,
+                "description"=> $request->description,
+                "price"  => $request->price
+            ])
+            ->execute();
+
+        return $this->sendResponse(message: "success");
     }
 
     // Update an existing book

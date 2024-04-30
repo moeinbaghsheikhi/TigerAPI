@@ -28,7 +28,7 @@ function getPostDataInput()
 }
 function getPath($version = true)
 {
-    $requestUri = explode('?', str_replace('/bookrest/', '', $_SERVER["REQUEST_URI"]))[0];
+    $requestUri = explode('?', str_replace('/TigerApi/', '', $_SERVER["REQUEST_URI"]))[0];
     if(!$version) $requestUri = explode('?', str_replace(['v1/', 'v2/'], '', $requestUri))[0];
 
     return $requestUri;
